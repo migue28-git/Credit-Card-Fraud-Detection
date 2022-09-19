@@ -53,7 +53,12 @@ from sklearn.model_selection import train_test_split
 df_scaled = MinMaxScaler().fit_transform(df_resampled)
 X_train, X_test, y_train, y_test = train_test_split(df_scaled[:,:-1],df_scaled[:,-1],test_size=0.25,random_state=0)
 
+#Using GridSearch for finging the best parameters with logistic regression
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LogisticRegression
 
+params= {'solver':['newton-cg','lbfgs','sag','saga'],'C':[0.1,0.3,0.7,0.9,1],'max_iter':[100,1000,10000,50000]}
+GS_LR_auc = GridSearchCV(LogisticRegression(),param_grid=params,n_jobs=4,scoring='roc_auc').fit(X_train,y_train)
 
 
 
