@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 def plot_data_binary(df,t='Plot'):
@@ -47,6 +46,14 @@ X_resampled,y_resampled = SMOTE(sampling_strategy=40/100,random_state=0).fit_res
 df_resampled = pd.concat([X_resampled,y_resampled],axis=1,join='inner')
 plot_data_binary(df_resampled,'0-1 Proportion SMOTE Method')
 plot_PCA_binary(df_resampled,'PCA data transformation SMOTE Method')
+
+#MinMaxScaler and Data split
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+df_scaled = MinMaxScaler().fit_transform(df_resampled)
+X_train, X_test, y_train, y_test = train_test_split(df_scaled[:,:-1],df_scaled[:,-1],test_size=0.25,random_state=0)
+
+
 
 
 
